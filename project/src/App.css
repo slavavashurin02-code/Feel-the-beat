@@ -1,0 +1,252 @@
+:root {
+  --ultramarine: #2330c9;
+  --ink: #0f1450;
+  --paper: #f5f3ff;
+  --sun: #ffd23f;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Приложение, а не страница: экран не прокручивается, текст не выделяется, нет «резинки» при протягивании */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--ultramarine);
+  color: var(--paper);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Один экран на всю высоту; отступы учитывают вырезы и системные панели */
+.app {
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: calc(env(safe-area-inset-top, 0px) + 0.75rem)
+    calc(env(safe-area-inset-right, 0px) + 1rem)
+    calc(env(safe-area-inset-bottom, 0px) + 0.75rem)
+    calc(env(safe-area-inset-left, 0px) + 1rem);
+}
+
+.app__header {
+  flex: none;
+}
+
+.app__title {
+  margin: 0;
+  font-size: clamp(1.25rem, 6vw, 1.75rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* Эквалайзер: столбики пульсируют всё время */
+.viz {
+  flex: none;
+  height: clamp(3.5rem, 12vh, 6rem);
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.bar {
+  flex: 1;
+  height: calc(var(--peak) * 100%);
+  background: var(--sun);
+  border-radius: 999px 999px 0 0;
+  transform-origin: bottom;
+  transform: scaleY(0.2);
+  animation: pulse var(--dur) ease-in-out var(--delay) infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    transform: scaleY(0.2);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* Три крупные кнопки делят между собой всё свободное место */
+.tracks {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.track {
+  position: relative;
+  flex: 1;
+  min-height: 3.6rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.1rem;
+  padding: 0 1.25rem;
+  font: inherit;
+  text-align: left;
+  color: var(--ultramarine);
+  background: var(--paper);
+  border: 0;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.track--accent {
+  color: var(--ink);
+  background: var(--sun);
+}
+
+.track:active {
+  transform: scale(0.98);
+}
+
+.track:focus-visible {
+  outline: 4px solid var(--sun);
+  outline-offset: 3px;
+}
+
+.track__title {
+  font-size: clamp(1.15rem, 4.8vw, 1.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.track__subtitle {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Пока кнопка играет, снизу заполняется полоска времени */
+.track__progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0.5rem;
+  background: currentColor;
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: fill var(--track-dur) linear forwards;
+}
+
+@keyframes fill {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Если у человека включено «уменьшить движение» — столбики не двигаются, остаётся полоска прогресса */
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    animation: none;
+    transform: scaleY(0.6);
+  }
+}
+
+/* Нижняя панель: сила вибрации и статус */
+.panel {
+  flex: none;
+}
+
+.strength__label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.strength__range {
+  width: 100%;
+  margin: 0.4rem 0 0;
+  accent-color: var(--sun);
+}
+
+.strength__hint {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+}
+
+/* Блок загрузки своего аудиофайла */
+.import {
+  flex: none;
+}
+
+.import__input {
+  display: none;
+}
+
+.import__button {
+  width: 100%;
+  padding: 0.8rem 1.25rem;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ink);
+  background: var(--sun);
+  border: 0;
+  border-radius: 1.5rem;
+  cursor: pointer;
+}
+
+.import__button:disabled {
+  opacity: 0.6;
+}
+
+.import__button:focus-visible,
+.stop:focus-visible {
+  outline: 4px solid var(--paper);
+  outline-offset: 3px;
+}
+
+.import__status {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.import__status.is-error,
+.panel__problem {
+  color: var(--sun);
+  font-weight: 700;
+}
+
+.panel__problem {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+}
+
+.stop {
+  width: 100%;
+  margin-bottom: 0.6rem;
+  padding: 0.7rem;
+  font: inherit;
+  font-weight: 800;
+  color: var(--paper);
+  background: transparent;
+  border: 3px solid var(--paper);
+  border-radius: 1.5rem;
+  cursor: pointer;
+}

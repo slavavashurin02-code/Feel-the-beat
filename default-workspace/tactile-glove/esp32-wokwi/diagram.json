@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "author": "Tactile Glove Simulator",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-led", "id": "led_beat", "top": -70, "left": 45, "attrs": { "color": "red", "label": "BEAT (Palm)" } },
+    { "type": "wokwi-led", "id": "f0", "top": 20, "left": -150, "attrs": { "color": "cyan", "label": "L1 (Мизинец)" } },
+    { "type": "wokwi-led", "id": "f1", "top": 60, "left": -150, "attrs": { "color": "cyan", "label": "L2" } },
+    { "type": "wokwi-led", "id": "f2", "top": 100, "left": -150, "attrs": { "color": "cyan", "label": "L3" } },
+    { "type": "wokwi-led", "id": "f3", "top": 140, "left": -150, "attrs": { "color": "cyan", "label": "L4" } },
+    { "type": "wokwi-led", "id": "f4", "top": 180, "left": -150, "attrs": { "color": "cyan", "label": "L5 (Большой)" } },
+    { "type": "wokwi-led", "id": "f5", "top": 20, "left": 180, "attrs": { "color": "limegreen", "label": "R1 (Большой)" } },
+    { "type": "wokwi-led", "id": "f6", "top": 60, "left": 180, "attrs": { "color": "limegreen", "label": "R2" } },
+    { "type": "wokwi-led", "id": "f7", "top": 100, "left": 180, "attrs": { "color": "limegreen", "label": "R3" } },
+    { "type": "wokwi-led", "id": "f8", "top": 140, "left": 180, "attrs": { "color": "limegreen", "label": "R4" } },
+    { "type": "wokwi-led", "id": "f9", "top": 180, "left": 180, "attrs": { "color": "limegreen", "label": "R5 (Мизинец)" } }
+  ],
+  "connections": [
+    [ "esp:D2", "led_beat:A", "red", [] ], [ "esp:GND.1", "led_beat:C", "black", [] ],
+    [ "esp:D13", "f0:A", "cyan", [] ],     [ "esp:GND.2", "f0:C", "black", [] ],
+    [ "esp:D12", "f1:A", "cyan", [] ],     [ "esp:GND.2", "f1:C", "black", [] ],
+    [ "esp:D14", "f2:A", "cyan", [] ],     [ "esp:GND.2", "f2:C", "black", [] ],
+    [ "esp:D27", "f3:A", "cyan", [] ],     [ "esp:GND.2", "f3:C", "black", [] ],
+    [ "esp:D26", "f4:A", "cyan", [] ],     [ "esp:GND.2", "f4:C", "black", [] ],
+    [ "esp:D25", "f5:A", "green", [] ],    [ "esp:GND.1", "f5:C", "black", [] ],
+    [ "esp:D33", "f6:A", "green", [] ],    [ "esp:GND.1", "f6:C", "black", [] ],
+    [ "esp:D32", "f7:A", "green", [] ],    [ "esp:GND.1", "f7:C", "black", [] ],
+    [ "esp:D18", "f8:A", "green", [] ],    [ "esp:GND.1", "f8:C", "black", [] ],
+    [ "esp:D19", "f9:A", "green", [] ],    [ "esp:GND.1", "f9:C", "black", [] ]
+  ]
+}

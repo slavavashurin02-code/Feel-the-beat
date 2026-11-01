@@ -1,0 +1,5 @@
+librosa>=0.10.1
+numpy>=1.24.0
+soundfile>=0.12.1
+pygame>=2.5.2
+pyserial>=3.5
